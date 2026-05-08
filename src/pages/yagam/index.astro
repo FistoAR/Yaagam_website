@@ -1,0 +1,270 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import FooterCTA from "../../components/FooterCTA.astro";
+
+// Assets
+import yagamHero from "../../assets/images/yagam/yagamHero.png";
+import cleaning1 from "../../assets/images/yagam/cleaning1.png";
+import cleaning2 from "../../assets/images/yagam/cleaning2.png";
+import cleaning3 from "../../assets/images/yagam/cleaning3.png";
+import cleaning4 from "../../assets/images/yagam/cleaning4.png";
+import cleaning5 from "../../assets/images/yagam/cleaning5.png";
+import knowledge1 from "../../assets/images/yagam/knowledge1.png";
+import knowledge2 from "../../assets/images/yagam/knowledge2.png";
+import victory1 from "../../assets/images/yagam/victory1.png";
+import doodleBg from "../../assets/images/doodle.png";
+
+const day1Rituals = [
+  { name: "Jwala Mukhi Yagam", image: cleaning1, desc: "Removing obstacles and negativity." },
+  { name: "Kamadhenu Yagam", image: cleaning2, desc: "Improved financial stability." },
+  { name: "Sri Sukta Yagam", image: cleaning3, desc: "Enhanced peace and prosperity." },
+  { name: "Bhagya Sukta Mahayagam", image: cleaning4, desc: "Strengthens relationships." },
+  { name: "Gandharva Raja Yagam", image: cleaning5, desc: "Inner & mental clarity." },
+];
+
+const day2Rituals = [
+  { name: "Brahma Saraswati Mahayagam", image: knowledge1, desc: "Wisdom and creative power." },
+  { name: "Kartha Virya Arjuna Yagam", image: knowledge2, desc: "Strength and protection." },
+];
+
+const day3Rituals = [
+  { name: "Maha Ashwamedha Yagam", image: victory1, desc: "Universal peace and divine sovereignty." },
+];
+---
+
+<MainLayout 
+  title="Divine Yagams & Homas — Sree Kanika Parameshwari Trust" 
+  description="Experience the transformative power of ancient Vedic fire rituals. Each Yagam is performed with scholarly precision following the sacred traditions of our lineage."
+>
+  <div class="relative min-h-screen overflow-hidden" style="background-color: #FAF5EB;">
+    <!-- Global Doodle Background -->
+    <div 
+      class="absolute inset-0 pointer-events-none z-0 " 
+      style={`
+        background-image: url(${doodleBg.src}); 
+        background-repeat: repeat; 
+        background-size: 400px; 
+        mix-blend-mode: multiply;
+        opacity: 0.15;
+      `}
+    ></div>
+
+    <!-- Hero Section with Transparent Overlay -->
+    <section class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden flex flex-col items-center justify-center text-center px-6">
+      <div class="absolute inset-0 z-0">
+        <img src={yagamHero.src} alt="Yagam Ritual" class="w-full h-full object-cover" />
+        <!-- <div class="absolute inset-0 bg-black/40"></div> -->
+      </div>
+
+      <div class="relative z-20 max-w-4xl animate-fade-in-up pt-[30%]">
+        <p class="uppercase tracking-[0.3em] font-bold text-xs md:text-sm mb-4 md:mb-6" style="color: #530809; font-family: 'Manrope', sans-serif;">
+          Sacred Rituals & Offerings
+        </p>
+        <h1 class="text-4xl md:text-7xl font-bold text-[#530809] mb-6 md:mb-8" style="font-family: 'Noto Serif', serif;">
+          Divine Yagams & Homas
+        </h1>
+        <p class="text-white/90 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-medium" style="font-family: 'Manrope', sans-serif;">
+          Experience the transformative power of ancient Vedic fire rituals. Each Yagam is performed by scholarly priests following the strict traditions of our lineage.
+        </p>
+      </div>
+    </section>
+
+    <!-- Event Details Card (Floating) -->
+    <div class="relative z-30  px-6">
+      <div class="max-w-6xl mx-auto bg-[#F2E9D9] border border-[#3B82F6]/30 rounded-xl shadow-2xl p-6 md:p-10">
+        <div class="flex items-center justify-center gap-2 mb-8">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#530809" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <h3 class="font-bold uppercase tracking-[0.2em] text-sm" style="color: #530809; font-family: 'Manrope', sans-serif;">Event Details</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:divide-x divide-[#530809]/20">
+          <div class="py-2 md:py-0 md:px-6 flex items-center gap-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#530809" stroke-width="2" class="opacity-80"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span class="text-base font-bold text-[#530809]/90" style="font-family: 'Manrope', sans-serif;">Date: 12-14 jun 2026</span>
+          </div>
+          <div class="py-2 md:py-0 md:px-6 flex items-center gap-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#530809" stroke-width="2" class="opacity-80"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span class="text-base font-bold text-[#530809]/90" style="font-family: 'Manrope', sans-serif;">Coimbatore Temple Hall</span>
+          </div>
+          <div class="py-2 md:py-0 md:px-6 flex items-center gap-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#530809" stroke-width="2" class="opacity-80"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span class="text-base font-bold text-[#530809]/90" style="font-family: 'Manrope', sans-serif;">6:00 AM - 12:00 PM</span>
+          </div>
+          <div class="py-2 md:py-0 md:px-6 flex items-center gap-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#530809" stroke-width="2" class="opacity-80"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            <span class="text-base font-bold text-[#530809]/90" style="font-family: 'Manrope', sans-serif;">Open for all devotees</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why Participate -->
+    <section class="max-w-6xl mx-auto px-6 py-24 relative z-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-[#5C1010] mb-12 text-center md:text-left" style="font-family: 'Cinzel', serif;">
+        Why Participate?
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-12">
+        {
+          [
+            "Removes obstacles & negativity",
+            "Improved financial stability",
+            "Enhanced peace",
+            "Strengthens relationships",
+            "Inner & mental clarity"
+          ].map((item) => (
+            <div class="flex items-center gap-4 group">
+              <div class="w-6 h-6 flex items-center justify-center text-[#5C1010] transition-transform duration-300 group-hover:scale-125">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <span class="text-xl font-bold text-[#3C1A1A]">{item}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Timeline Header -->
+    <div class="w-full bg-[#F2B43D] py-4 text-center">
+      <h2 class="text-2xl md:text-4xl font-bold text-[#2C0808] uppercase tracking-[0.1em]" style="font-family: 'Cinzel', serif;">
+        3 Days Divine Journey - Timeline
+      </h2>
+    </div>
+
+    <!-- Timeline Sections -->
+    <div class="max-w-7xl mx-auto px-6 py-20 space-y-32">
+      
+      <!-- Day 1 -->
+      <div class="reveal-on-scroll transition-all duration-1000">
+        <div class="text-center mb-16">
+          <h3 class="text-2xl md:text-3xl font-bold text-[#5C1010] mb-2" style="font-family: 'Cinzel', serif;">Day 1 - Cleaning & Prosperity Initiation</h3>
+          <div class="w-24 h-1 bg-[#F2B43D] mx-auto"></div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-8">
+          {day1Rituals.map((r) => (
+            <div class="w-full md:w-[220px] bg-white rounded-xl shadow-lg border border-[#E8DCC4] overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+              <div class="h-40 overflow-hidden relative">
+                <img src={r.image.src} alt={r.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="absolute bottom-[-15px] left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#5C1010] border-2 border-white flex items-center justify-center z-10">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                </div>
+              </div>
+              <div class="p-6 pt-8 text-center">
+                <h4 class="font-bold text-[#5C1010] text-lg mb-2 leading-tight" style="font-family: 'Cinzel', serif;">{r.name}</h4>
+                <p class="text-xs text-[#7A4444] mb-4">{r.desc}</p>
+                <a href="#" class="text-[10px] font-bold text-[#F2B43D] uppercase tracking-widest hover:text-[#5C1010] transition-colors">Learn more →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="reveal-on-scroll transition-all duration-1000">
+        <div class="text-center mb-16">
+          <h3 class="text-2xl md:text-3xl font-bold text-[#5C1010] mb-2" style="font-family: 'Cinzel', serif;">Day 2 - Knowledge & Strength</h3>
+          <div class="w-24 h-1 bg-[#F2B43D] mx-auto"></div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-12">
+          {day2Rituals.map((r) => (
+            <div class="w-full md:w-[280px] bg-white rounded-xl shadow-lg border border-[#E8DCC4] overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+              <div class="h-48 overflow-hidden relative">
+                <img src={r.image.src} alt={r.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="absolute bottom-[-15px] left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[#5C1010] border-2 border-white flex items-center justify-center z-10">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                </div>
+              </div>
+              <div class="p-8 pt-10 text-center">
+                <h4 class="font-bold text-[#5C1010] text-xl mb-3 leading-tight" style="font-family: 'Cinzel', serif;">{r.name}</h4>
+                <p class="text-sm text-[#7A4444] mb-6">{r.desc}</p>
+                <a href="#" class="text-xs font-bold text-[#F2B43D] uppercase tracking-widest hover:text-[#5C1010] transition-colors">Learn more →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Day 3 -->
+      <div class="reveal-on-scroll transition-all duration-1000">
+        <div class="text-center mb-16">
+          <h3 class="text-2xl md:text-3xl font-bold text-[#5C1010] mb-2" style="font-family: 'Cinzel', serif;">Day 3 - Victory & Yagam</h3>
+          <div class="w-24 h-1 bg-[#F2B43D] mx-auto"></div>
+        </div>
+        <div class="max-w-md mx-auto">
+          {day3Rituals.map((r) => (
+            <div class="bg-white rounded-xl shadow-2xl border border-[#E8DCC4] overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+              <div class="h-64 overflow-hidden relative">
+                <img src={r.image.src} alt={r.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div class="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-[#5C1010] border-2 border-white flex items-center justify-center z-10">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                </div>
+              </div>
+              <div class="p-10 pt-12 text-center">
+                <h4 class="font-bold text-[#5C1010] text-2xl mb-4 leading-tight" style="font-family: 'Cinzel', serif;">{r.name}</h4>
+                <p class="text-base text-[#7A4444] mb-8">{r.desc}</p>
+                <a href="#" class="text-sm font-bold text-[#F2B43D] uppercase tracking-widest hover:text-[#5C1010] transition-colors">Learn more →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Intervention / Consultation Section -->
+    <section class="max-w-6xl mx-auto px-6 py-24 reveal-on-scroll transition-all duration-1000">
+      <div class="bg-[#F4EDE0] rounded-2xl p-10 md:p-20 text-center border border-[#E8DCC4] shadow-inner">
+        <h2 class="text-3xl md:text-5xl font-bold text-[#2C0808] mb-6" style="font-family: 'Cinzel', serif;">Seek Divine Intervention</h2>
+        <p class="text-[#7A4444] text-lg md:text-xl max-w-2xl mx-auto mb-12">
+          Unsure which ritual is appropriate for your current life situation? Our Vedic consultants are available to guide you, based on your birth star and intentions.
+        </p>
+        <div class="flex flex-col md:row justify-center gap-6">
+          <button class="px-10 py-4 bg-[#C9A227] text-[#1A0505] font-bold rounded-lg shadow-lg hover:bg-[#E0B84D] transition-all transform hover:scale-105">
+            Schedule a Consultation
+          </button>
+          <button class="px-10 py-4 border-2 border-[#C9A227] text-[#C9A227] font-bold rounded-lg hover:bg-[#C9A227] hover:text-[#1A0505] transition-all transform hover:scale-105">
+            View Full Event Calendar
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <FooterCTA />
+  </div>
+</MainLayout>
+
+<script>
+  const observerOptions = {
+    threshold: 0.1,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('opacity-0', 'translate-y-10');
+        entry.target.classList.add('opacity-100', 'translate-y-0');
+      } else {
+        entry.target.classList.add('opacity-0', 'translate-y-10');
+        entry.target.classList.remove('opacity-100', 'translate-y-0');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+    el.classList.add('opacity-0', 'translate-y-10');
+    observer.observe(el);
+  });
+</script>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 1s ease-out forwards;
+  }
+</style>

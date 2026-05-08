@@ -1,0 +1,293 @@
+---
+import footerBg from "../assets/images/Footer.png";
+const currentYear = new Date().getFullYear();
+
+const yagamLinks = [
+  "Jwala Mukhi Yagam",
+  "Kamadhenu Yagam",
+  "Sri Sukta Yagam",
+  "Bhagya Sukta Mahayagam",
+  "Gandharva Raja Yagam",
+  "Brahma Saraswati Mahayagam",
+  "Kartha Virya Arjuna Yagam",
+  "Maha Ashwamedha Yagam",
+];
+---
+
+<footer
+  class="relative overflow-hidden"
+  style="font-family: 'Manrope', sans-serif;"
+>
+  <!-- Background image -->
+  <img
+    src={footerBg.src}
+    alt=""
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full object-cover"
+  />
+  <!-- Dark overlay -->
+  <div class="absolute inset-0" style="background: rgba(15,3,3,0.85);"></div>
+
+  <div class="relative w-full px-10 md:px-20 pt-14 pb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+      <!-- Brand Column -->
+      <div class="space-y-6">
+        <h3
+          class="font-bold text-xl"
+          style="color: #FAF5EB; font-family: 'Cinzel', serif;"
+        >
+          Sree Kanika Parameshwari Trust
+        </h3>
+        <p
+          class="text-base leading-relaxed max-w-sm"
+          style="color: #FFFFFF; opacity: 0.9;"
+        >
+          Dedicated to preserving the eternal wisdom of the Vedas and serving
+          humanity through spiritual and social initiatives.
+        </p>
+        <!-- Social Icons (Circular gold borders) -->
+        <div class="flex items-center gap-5">
+          {
+            [
+              {
+                name: "Facebook",
+                path: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z",
+                type: "fill",
+              },
+              { name: "Instagram", path: "M2 2w20v20H2z", type: "insta" },
+              {
+                name: "YouTube",
+                path: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z",
+                type: "fill",
+              },
+            ].map((social) => (
+              <a
+                href="#"
+                aria-label={social.name}
+                class="social-icon w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300"
+                style="border-color: #C9A227;"
+              >
+                {social.type === "fill" ? (
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    class="fill-current transition-colors duration-300"
+                    style="color: #C9A227;"
+                  >
+                    <path d={social.path} />
+                  </svg>
+                ) : social.type === "insta" ? (
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="transition-colors duration-300"
+                    style="color: #C9A227;"
+                  >
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle
+                      cx="17.5"
+                      cy="6.5"
+                      r="1.5"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="transition-colors duration-300"
+                    style="color: #C9A227;"
+                  >
+                    <path d={social.path} />
+                  </svg>
+                )}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Explore Links -->
+      <div class="lg:pl-8">
+        <h4 class="font-bold text-xl mb-8" style="color: #C9A227;">Explore</h4>
+        <ul class="space-y-4">
+          {
+            ["About us", "Yagam", "Events", "Gallery", "Contact us"].map(
+              (link) => (
+                <li>
+                  <a
+                    href={
+                      link === "About us"
+                        ? "/about"
+                        : link === "Contact us"
+                          ? "/contact"
+                          : `/${link.toLowerCase()}`
+                    }
+                    class="footer-link inline-block text-base transition-all duration-300 hover:text-white relative group"
+                    style="color: #FFFFFF; opacity: 0.9;"
+                  >
+                    {link}
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C9A227] transition-all duration-300 group-hover:w-full" />
+                  </a>
+                </li>
+              ),
+            )
+          }
+        </ul>
+      </div>
+
+      <!-- Yagam Links -->
+      <div>
+        <h4 class="font-bold text-xl mb-8" style="color: #C9A227;">Yagam</h4>
+        <ul class="space-y-4">
+          {
+            yagamLinks.map((link) => (
+              <li>
+                <a
+                  href="/yagam"
+                  class="footer-link inline-block text-base transition-all duration-300 hover:text-white relative group"
+                  style="color: #FFFFFF; opacity: 0.9;"
+                >
+                  {link}
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C9A227] transition-all duration-300 group-hover:w-full" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Contact Us -->
+      <div>
+        <h4 class="font-bold text-xl mb-8" style="color: #C9A227;">
+          Contact Us
+        </h4>
+        <ul class="space-y-6">
+          <li class="flex items-start gap-4 group/contact">
+            <svg
+              class="mt-1 flex-shrink-0 transition-transform duration-300 group-hover/contact:scale-110"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="#C9A227"
+            >
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+              ></path>
+            </svg>
+            <span
+              class="text-base leading-relaxed"
+              style="color: #FFFFFF; opacity: 0.9;"
+            >
+              123 Temple Road, Heritage Nagar,<br />Bangalore, Karnataka 560001
+            </span>
+          </li>
+          <li class="flex items-center gap-4 group/contact">
+            <svg
+              class="flex-shrink-0 transition-transform duration-300 group-hover/contact:scale-110"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="#C9A227"
+            >
+              <path
+                d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.15-3.6-6.51-6.42l1.97-1.58c.27-.26.35-.65.24-1-.36-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.72 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
+              ></path>
+            </svg>
+            <a
+              href="tel:+917400000000"
+              class="text-base hover:text-white transition-all duration-300 group-hover/contact:translate-x-1"
+              style="color: #FFFFFF; opacity: 0.9;"
+            >
+              +91 740000000
+            </a>
+          </li>
+          <li class="flex items-center gap-4 group/contact">
+            <svg
+              class="flex-shrink-0 transition-transform duration-300 group-hover/contact:scale-110"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="#C9A227"
+            >
+              <path
+                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+              ></path>
+            </svg>
+            <a
+              href="mailto:contact@kh"
+              class="text-base hover:text-white transition-all duration-300 group-hover/contact:translate-x-1"
+              style="color: #FFFFFF; opacity: 0.9;"
+            >
+              contact@kh
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Divider Line -->
+    <div
+      class="w-full h-px mt-16 mb-8"
+      style="background: rgba(255,255,255,0.15);"
+    >
+    </div>
+
+    <!-- Bottom Bar -->
+    <div
+      class="flex flex-col md:flex-row items-center justify-between gap-6 pt-4 px-4"
+    >
+      <div
+        class="flex flex-wrap items-center gap-6 text-sm"
+        style="color: #FFFFFF; opacity: 0.9;"
+      >
+        {
+          [
+            "Privacy Policy",
+            "Seva Guidelines",
+            "Donation Terms",
+            "Contact Us",
+          ].map((item) => (
+            <a
+              href="#"
+              class="footer-link inline-block hover:text-white transition-all duration-300 relative group"
+            >
+              {item}
+              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C9A227] transition-all duration-300 group-hover:w-full" />
+            </a>
+          ))
+        }
+      </div>
+      <p class="text-sm" style="color: #FFFFFF; opacity: 0.9;">
+        © {currentYear} Sree Kanika Parameshwari Trust. All Rights Reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-link:hover {
+    opacity: 1 !important;
+  }
+
+  .social-icon:hover {
+    background-color: #c9a227;
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 4px 12px rgba(201, 162, 39, 0.3);
+  }
+
+  .social-icon:hover svg {
+    color: #1a0505 !important;
+  }
+</style>

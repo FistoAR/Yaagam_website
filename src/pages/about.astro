@@ -1,0 +1,199 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import FooterCTA from "../components/FooterCTA.astro";
+import LandingHero from "../components/LandingHero.astro";
+import AboutSlider from "../components/AboutSlider.astro";
+
+// Import assets
+import doodleBg from "../assets/images/doodle.png";
+
+// Import slider images
+import slide1_1 from "../assets/images/AboutSlider/slide1.1.png";
+import slide1_2 from "../assets/images/AboutSlider/slide1.2.png";
+import slide1_3 from "../assets/images/AboutSlider/slide1.3.png";
+import slide1_4 from "../assets/images/AboutSlider/slide1.4.png";
+
+import slide2_1 from "../assets/images/AboutSlider/slide2.1.png";
+import slide2_2 from "../assets/images/AboutSlider/slide2.2.png";
+import slide2_3 from "../assets/images/AboutSlider/slide2.3.png";
+
+import slide3_1 from "../assets/images/AboutSlider/slide3.1.png";
+import slide3_2 from "../assets/images/AboutSlider/slide3.2.png";
+import slide3_3 from "../assets/images/AboutSlider/slide3.3.png";
+import slide3_4 from "../assets/images/AboutSlider/slide3.4.png";
+
+const slider1Images = [slide1_1, slide1_2, slide1_3, slide1_4];
+const slider2Images = [slide2_1, slide2_2, slide2_3];
+const slider3Images = [slide3_1, slide3_2, slide3_3, slide3_4];
+---
+
+<MainLayout
+  title="About — Sree Kanika Parameshwari Trust"
+  description="Learn about the history and mission of Sree Kanika Parameshwari Trust — serving faith and uplifting communities since 2007."
+>
+  <!-- Hero Section -->
+  <LandingHero />
+
+  <!-- About Us Section -->
+  <section class="relative py-24 overflow-hidden">
+    <!-- Doodle Pattern: Using inline style and high opacity for guaranteed visibility -->
+    <div
+      class="absolute inset-0 pointer-events-none z-0"
+      style={`
+        background-image: url(${doodleBg.src}); 
+        background-repeat: repeat; 
+        background-size: 400px; 
+        mix-blend-mode: multiply;
+      `}
+    >
+    </div>
+
+    <div class="relative w-full px-10 md:px-20 lg:px-32 z-10 -mt-25">
+      <h2
+        class="text-4xl md:text-5xl font-bold mb-16 text-[#2C0808]"
+        style="font-family: 'Playfair Display', serif;"
+      >
+        About Us
+      </h2>
+
+      <div class="space-y-24">
+        <!-- Section 1 -->
+        <div class="reveal-on-scroll grid grid-cols-1 lg:grid-cols-12 gap-12 items-center opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+          <div
+            class="lg:col-span-7 space-y-6 text-base md:text-lg leading-relaxed text-[#3C1A1A]"
+          >
+            <p>
+              <span
+                class="font-bold text-xl inline-block mb-1"
+                style="color: #5C1010;">History:</span
+              >
+              This began as an unregistered trust in March 2007, started in an office
+              at Mannarkadu. It was a simple initiative by the couple Ramedas and
+              Indira, who decided to renovate their family deity temple, Sri Karupparaya
+              Swamy Temple, located on Lakshmana Iyer Street in Negamam, and to construct
+              a gopuram there. All family members contributed financially by pooling
+              their resources. Under the leadership of Ramedas, construction work
+              began in February 2008, and the Kumbabishekam ceremony was successfully
+              conducted on 17/03/2008.
+            </p>
+          </div>
+          <div class="lg:col-span-5">
+            <div
+              class="slider-container rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-transparent"
+            >
+              <AboutSlider
+                images={slider1Images}
+                height="360px"
+                interval={4000}
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 (Inverted) -->
+        <div class="reveal-on-scroll grid grid-cols-1 lg:grid-cols-12 gap-12 items-center opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+          <div class="lg:col-span-5 order-2 lg:order-1">
+            <div
+              class="slider-container rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-transparent"
+            >
+              <AboutSlider
+                images={slider2Images}
+                height="320px"
+                interval={4500}
+              />
+            </div>
+          </div>
+          <div
+            class="lg:col-span-7 order-1 lg:order-2 space-y-6 text-base md:text-lg leading-relaxed text-[#3C1A1A]"
+          >
+            <p>
+              Following this, even before the trust was formally registered,
+              various forms of assistance were provided in 2012 to the
+              Jalakandeswarar Temple located on Sundakkamuthur Road in
+              Coimbatore. There, 27 Nakshatra trees brought from Panruti were
+              planted, and they continue to be maintained by the trust. It is a
+              belief in Hindu tradition that worshipping the tree corresponding
+              to one’s birth star can help remove doshas (negative planetary
+              effects) indicated in the horoscope. Moreover, such practices
+              discourage tree cutting, which in turn helps increase rainfall,
+              boosts agricultural production, and prevents food shortages in the
+              country. Hence, these trees were planted on behalf of the trust.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="reveal-on-scroll grid grid-cols-1 lg:grid-cols-12 gap-12 items-center opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+          <div
+            class="lg:col-span-7 space-y-6 text-base md:text-lg leading-relaxed text-[#3C1A1A]"
+          >
+            <p>
+              Subsequently, the time arrived again for the Kumbabishekam of the
+              Negamam Karupparaya Swamy Temple. The trust members convened in
+              July 2019, and after conducting Deva Prasannam (divine
+              consultation), it was decided to hold the next Kumbabishekam on
+              07/02/2020. With the support of the families who worship the deity
+              as their Kuladevam and with contributions from local villagers,
+              the ceremony was conducted successfully. On
+              07/02/2020—specifically on the auspicious day of Thaipusam—the
+              second Kumbabishekam of the Negamam Karupparaya Temple was held.
+              The event was organized in collaboration with the general public
+              and devotees of the deity, following the Deva Prasannam, under the
+              leadership of Mr. Gopalasamy Iyer from Negamam. It was during this
+              period that the idea of formally registering the trust took shape
+              in the minds of Ramedas and Indira, leading to a firm decision to
+              proceed with its official registration.
+            </p>
+          </div>
+          <div class="lg:col-span-5">
+            <div
+              class="slider-container rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-transparent"
+            >
+              <AboutSlider
+                images={slider3Images}
+                height="380px"
+                interval={5000}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FooterCTA />
+</MainLayout>
+
+<script>
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('opacity-0', 'translate-y-10');
+        entry.target.classList.add('opacity-100', 'translate-y-0');
+      } else {
+        // Animation for scroll up (re-hide)
+        entry.target.classList.add('opacity-0', 'translate-y-10');
+        entry.target.classList.remove('opacity-100', 'translate-y-0');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+</script>
+
+<style>
+  .slider-container {
+    transition:
+      transform 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+  .slider-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+</style>

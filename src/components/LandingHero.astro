@@ -1,0 +1,107 @@
+---
+import homeVideo from '../assets/videos/home.mp4';
+import doodleBg from '../assets/images/doodle.png';
+---
+
+<section class="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+  <!-- Doodle Pattern Overlay -->
+  <div 
+    class="absolute inset-0 pointer-events-none z-0" 
+    style={`
+      background-image: url(${doodleBg.src}); 
+      background-repeat: repeat; 
+      background-size: 400px; 
+      mix-blend-mode: multiply;
+    `}
+  ></div>
+  <!-- Background Video -->
+  <div class="absolute inset-0 -z-10">
+    <video 
+      autoplay 
+      muted 
+      loop 
+      playsinline 
+      class="w-full h-full object-cover"
+    >
+      <source src={homeVideo} type="video/mp4" />
+    </video>
+    <!-- Overlay Gradient -->
+    <!-- <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div> -->
+  </div>
+
+  <div class="mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="max-w-3xl animate-fade-in-up">
+      <!-- Subtitle -->
+      <p class="text-[#C9A227] font-body text-sm md:text-base tracking-[0.2em] uppercase mb-4 opacity-90">
+        Divine legacy and spiritual service
+      </p>
+      
+      <!-- Main Title -->
+      <h1 class="text-5xl md:text-7xl font-display font-bold text-white leading-tight mb-6">
+        Serving Faith. <br />
+        <span class="text-[#C9A227]">Uplifting Communities.</span>
+      </h1>
+      
+      <!-- Description -->
+      <p class="text-slate-200 text-lg md:text-xl font-traditional leading-relaxed mb-10 max-w-2xl opacity-80">
+        Rooted in tradition, driven by service, Sree Kanika Parameshwari Trust preserves heritage and supports spiritual and community well-being.
+      </p>
+      
+      <!-- CTA Button -->
+      <div class="flex flex-col sm:flex-row gap-6">
+        <a 
+          href="/yagam" 
+          class="inline-flex items-center justify-center bg-[#C9A227] hover:bg-[#E0B84D] text-[#2C0808] font-bold px-10 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-xl shadow-[#C9A227]/20 text-lg"
+        >
+          Book Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Smile Curve (Transition to About) -->
+  <div class="absolute bottom-0 left-0 right-0 z-20 h-[120px] pointer-events-none">
+    <!-- Responsive SVG for the solid curve and for the clip-path definition -->
+    <svg width="0" height="0" class="absolute">
+      <defs>
+        <clipPath id="smileCurveClip" clipPathUnits="objectBoundingBox">
+          <path d="M0,0 C0.167,0.667,0.333,1,0.5,1 C0.667,1,0.833,0.667,1,0 V1 H0 V0 Z" />
+        </clipPath>
+      </defs>
+    </svg>
+
+    <!-- The doodle overlay (using the responsive clip-path) -->
+    <div 
+      class="absolute inset-0 z-10" 
+      style={`
+        background-color: #ffffff;
+        background-image: url(${doodleBg.src}); 
+        background-repeat: repeat; 
+        background-size: 400px; 
+        mix-blend-mode: multiply;
+        clip-path: url(#smileCurveClip);
+      `}
+    ></div>
+  </div>
+</section>
+
+<style>
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  h1 {
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+</style>

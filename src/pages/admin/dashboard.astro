@@ -1,0 +1,141 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Dashboard" activePage="dashboard">
+  <!-- Stats Grid -->
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card">
+      <div class="stat-icon gold"><i data-lucide="qr-code"></i></div>
+      <div class="stat-value" id="statTotalQR">-</div>
+      <div class="stat-label">Total QR Codes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green"><i data-lucide="check-circle"></i></div>
+      <div class="stat-value" id="statVerified">-</div>
+      <div class="stat-label">Verified</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon red"><i data-lucide="clock"></i></div>
+      <div class="stat-value" id="statPending">-</div>
+      <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon blue"><i data-lucide="users"></i></div>
+      <div class="stat-value" id="statEmployees">-</div>
+      <div class="stat-label">Employees</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon gold"><i data-lucide="calendar"></i></div>
+      <div class="stat-value" id="statToday">-</div>
+      <div class="stat-label">Created Today</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green"><i data-lucide="sparkles"></i></div>
+      <div class="stat-value" id="statUpcoming">-</div>
+      <div class="stat-label">Upcoming Events</div>
+    </div>
+  </div>
+
+  <!-- Recent QR Codes -->
+  <div class="panel">
+    <div class="panel-header">
+      <h3>Recent QR Codes</h3>
+      <a href="/admin/qr-generator" class="btn btn-sm btn-primary">
+        <i data-lucide="plus" style="width:14px;"></i> New QR
+      </a>
+    </div>
+    <div class="panel-body" style="padding:0;">
+      <table class="data-table" id="recentTable">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Yaagam</th>
+            <th>Event Date</th>
+            <th>Status</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody id="recentBody">
+          <tr><td colspan="5"><div class="loader"><div class="spinner"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Activity Log -->
+  <div class="panel">
+    <div class="panel-header">
+      <h3>Recent Activity</h3>
+    </div>
+    <div class="panel-body" style="padding:0;">
+      <table class="data-table" id="activityTable">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Action</th>
+            <th>Details</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="activityBody">
+          <tr><td colspan="4"><div class="loader"><div class="spinner"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>
+
+<script is:inline>
+  (async function loadDashboard() {
+    try {
+      const data = await apiCall('/dashboard/stats.php');
+      if (!data.success) return;
+
+      const s = data.stats;
+      document.getElementById('statTotalQR').textContent = s.total_qr;
+      document.getElementById('statVerified').textContent = s.verified_qr;
+      document.getElementById('statPending').textContent = s.pending_qr;
+      document.getElementById('statEmployees').textContent = s.total_employees;
+      document.getElementById('statToday').textContent = s.today_qr;
+      document.getElementById('statUpcoming').textContent = s.upcoming_events;
+
+      // Recent QR
+      const tbody = document.getElementById('recentBody');
+      if (!data.recent_qr || data.recent_qr.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-icon"><i data-lucide="qr-code" style="width:48px;height:48px;"></i></div><p>No QR codes yet</p></div></td></tr>';
+      } else {
+        tbody.innerHTML = data.recent_qr.map(q => `
+          <tr>
+            <td style="color:var(--text-primary);font-weight:600;">${q.customer_name}</td>
+            <td>${q.yaagam_name}</td>
+            <td>${new Date(q.event_datetime).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})}</td>
+            <td><span class="badge ${q.is_verified == 1 ? 'verified' : 'pending'}">${q.is_verified == 1 ? 'Verified' : 'Pending'}</span></td>
+            <td>${new Date(q.created_at).toLocaleDateString('en-IN')}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Activity
+      const actBody = document.getElementById('activityBody');
+      if (!data.activity_log || data.activity_log.length === 0) {
+        actBody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><p>No activity yet</p></div></td></tr>';
+      } else {
+        actBody.innerHTML = data.activity_log.map(a => `
+          <tr>
+            <td style="color:var(--text-primary);font-weight:600;">${a.full_name || 'System'}</td>
+            <td><span class="badge admin-role">${a.action.replace('_', ' ')}</span></td>
+            <td>${a.details || '-'}</td>
+            <td>${new Date(a.created_at).toLocaleString('en-IN', {dateStyle:'short', timeStyle:'short'})}</td>
+          </tr>
+        `).join('');
+      }
+      
+      // Re-initialize icons for dynamic content
+      lucide.createIcons();
+    } catch (err) {
+      console.error('Dashboard load error:', err);
+      showToast('Failed to load dashboard data', 'error');
+    }
+  })();
+</script>

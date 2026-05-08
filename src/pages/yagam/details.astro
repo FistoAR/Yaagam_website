@@ -1,0 +1,177 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Book a Yagam — Personal Details" description="Enter your personal sanctuary details to complete your Yagam booking.">
+  <div style="background-color:#FAF5EB; min-height:100vh; padding-top:80px; font-family:'Inter',sans-serif;">
+
+    <!-- Step Indicator -->
+    <section class="max-w-xl mx-auto px-6 pt-10 pb-2">
+      <div class="flex items-center justify-center">
+        {[
+          { n:1, label:'Schedule', done:true,  active:false },
+          { n:2, label:'Details',  done:false, active:true  },
+          { n:3, label:'Review',   done:false, active:false },
+          { n:4, label:'Payment',  done:false, active:false },
+        ].map((s, i) => (
+          <div class="flex items-center">
+            <div class="flex flex-col items-center">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold border-2"
+                style={s.done || s.active ? 'background:#5C1010;border-color:#5C1010;color:#FAF5EB;' : 'background:#FAF5EB;border-color:#C8A882;color:#7A4444;'}>
+                {s.done ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                ) : s.n}
+              </div>
+              <span class="text-xs mt-1 font-medium" style={s.active ? 'color:#2C0808;' : 'color:#7A4444;'}>{s.label}</span>
+            </div>
+            {i < 3 && <div class="w-16 md:w-20 h-px mx-2 mb-5" style="background:#C8A882;"></div>}
+          </div>
+        ))}
+      </div>
+      <p class="text-center text-sm mt-3" style="color:#7A4444;">Step 2 of 4: Select details</p>
+    </section>
+
+    <!-- Main Grid -->
+    <section class="max-w-6xl mx-auto px-6 pb-16 mt-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Left: Form -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-xl p-8 shadow-sm border" style="border-color:#E8D5B5;">
+            <h1 class="text-2xl font-bold mb-7" style="color:#2C0808; font-family:'Playfair Display',serif;">Personal Sanctuary Details</h1>
+
+            <form class="space-y-5">
+              <!-- Name -->
+              <div>
+                <label class="block text-xs font-medium mb-1.5" style="color:#5C3030;">Name</label>
+                <input type="text" placeholder="Adithya Vardhan" class="inp w-full px-4 py-3 rounded-lg text-sm outline-none"
+                  style="border:1px solid #E8D5B5;background:#FDFAF5;color:#2C0808;"/>
+              </div>
+
+              <!-- Phone + Email -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-medium mb-1.5" style="color:#5C3030;">Phone Number</label>
+                  <input type="tel" placeholder="+91 98765 00000" class="inp w-full px-4 py-3 rounded-lg text-sm outline-none"
+                    style="border:1px solid #E8D5B5;background:#FDFAF5;color:#2C0808;"/>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium mb-1.5" style="color:#5C3030;">Email Address</label>
+                  <input type="email" placeholder="adithya.v@example.com" class="inp w-full px-4 py-3 rounded-lg text-sm outline-none"
+                    style="border:1px solid #E8D5B5;background:#FDFAF5;color:#2C0808;"/>
+                </div>
+              </div>
+
+              <!-- Gotram + City -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-medium mb-1.5" style="color:#5C3030;">Gotram (Lineage)</label>
+                  <div class="relative">
+                    <select class="inp w-full px-4 py-3 rounded-lg text-sm outline-none appearance-none cursor-pointer"
+                      style="border:1px solid #E8D5B5;background:#FDFAF5;color:#5C3030;">
+                      <option>Select your Gotram</option>
+                      <option>Bharadwaja</option>
+                      <option>Kasyapa</option>
+                      <option>Vasishta</option>
+                      <option>Vishwamitra</option>
+                    </select>
+                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7A4444" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium mb-1.5" style="color:#5C3030;">City</label>
+                  <input type="text" placeholder="e.g. Coimbatore" class="inp w-full px-4 py-3 rounded-lg text-sm outline-none"
+                    style="border:1px solid #E8D5B5;background:#FDFAF5;color:#2C0808;"/>
+                </div>
+              </div>
+
+              <!-- Kulatheivam + Aadhaar -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-medium mb-1.5" style="color:#5C3030;">Kulatheivam (Family Deity)</label>
+                  <input type="text" placeholder="Name of Deity" class="inp w-full px-4 py-3 rounded-lg text-sm outline-none"
+                    style="border:1px solid #E8D5B5;background:#FDFAF5;color:#2C0808;"/>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium mb-1.5" style="color:#5C3030;">Aadhaar Number</label>
+                  <input type="text" placeholder="XXXX XXXX XXXX" maxlength="14" class="inp w-full px-4 py-3 rounded-lg text-sm outline-none"
+                    style="border:1px solid #E8D5B5;background:#FDFAF5;color:#2C0808;"/>
+                </div>
+              </div>
+
+              <!-- Buttons -->
+              <div class="flex items-center justify-between pt-2">
+                <a href="/yagam/book" class="inline-flex items-center gap-2 text-sm font-medium hover:underline" style="color:#5C1010;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  Back to Details
+                </a>
+                <a href="/yagam/review"
+                  class="inline-flex items-center gap-2 px-8 py-3 rounded-lg text-white text-sm font-semibold hover:opacity-90 transition-all"
+                  style="background:#5C1010;">
+                  Continue to Review
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="space-y-4">
+
+          <!-- Selected Ritual -->
+          <div class="bg-white rounded-xl overflow-hidden shadow-sm border" style="border-color:#E8D5B5;">
+            <div class="px-5 pt-5 pb-3">
+              <h3 class="font-semibold text-sm mb-3" style="color:#2C0808;">Selected Ritual</h3>
+            </div>
+            <!-- Image placeholder -->
+            <div style="height:140px;background:linear-gradient(135deg,#1A0A00,#4A2000);">
+              <div class="w-full h-full flex items-center justify-center opacity-25">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+            </div>
+            <div class="px-5 py-4 space-y-2.5">
+              <div class="flex justify-between text-sm">
+                <span style="color:#7A4444;">Ritual Type</span>
+                <span class="font-bold" style="color:#5C1010;">Jwala mukhi yagam</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span style="color:#7A4444;">Scheduled For</span>
+                <span class="font-bold" style="color:#5C1010;">14 Jul 2026</span>
+              </div>
+              <div class="flex justify-between text-sm pt-1 border-t" style="border-color:#F0E0C8;">
+                <span style="color:#7A4444;">Base Offering</span>
+                <span class="font-bold" style="color:#C9A227;">₹ 5,200</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy Guaranteed -->
+          <div class="bg-white rounded-xl p-5 shadow-sm border text-center" style="border-color:#E8D5B5;">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3" style="background:#FFF3E0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <p class="font-semibold text-sm mb-1" style="color:#2C0808;">Privacy Guaranteed</p>
+            <p class="text-xs leading-relaxed" style="color:#7A4444;">Your spiritual and personal lineage details are kept strictly confidential as per Vedic protocols.</p>
+          </div>
+
+          <!-- Need Help -->
+          <div class="rounded-xl p-5 border" style="background:#FFF8EC; border-color:#E8D5B5;">
+            <p class="font-semibold text-sm mb-1" style="color:#2C0808;">Need help?</p>
+            <p class="text-xs leading-relaxed" style="color:#7A4444;">If you are unsure of your Kaththiram, please consult your family priest or contact our support scholars.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  .inp:focus {
+    border-color: #C9A227;
+    box-shadow: 0 0 0 3px rgba(201,162,39,0.12);
+  }
+</style>

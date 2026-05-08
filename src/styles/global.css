@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+  --color-gold-50: #fff9e6;
+  --color-gold-100: #ffefcc;
+  --color-gold-200: #ffe099;
+  --color-gold-300: #ffd166;
+  --color-gold-400: #ffc233;
+  --color-gold-500: #ffb300;
+  --color-gold-600: #cc8f00;
+  --color-gold-700: #996b00;
+  --color-gold-800: #664700;
+  --color-gold-900: #332400;
+  
+  --color-primary: var(--color-gold-500);
+  --color-secondary: #1a1a1a;
+  
+  --font-display: "Cinzel", serif;
+  --font-body: "Inter", sans-serif;
+  --font-traditional: "IM Fell English", serif;
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 224 71.4% 4.1%;
+}
+
+.dark {
+  --background: 224 71.4% 4.1%;
+  --foreground: 210 20% 98%;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-slate-950 font-body antialiased transition-colors duration-300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight;
+  }
+}
+
+/* Glassmorphism utility */
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/20;
+}
+
+.dark .glass {
+  @apply bg-slate-900/70 border-slate-800/20;
+}

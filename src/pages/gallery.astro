@@ -1,0 +1,109 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import FooterCTA from '../components/FooterCTA.astro';
+
+// Assets
+import vertical1 from '../assets/images/gallery/vertical1.png';
+import Squar1 from '../assets/images/gallery/Squar1.png';
+import Square2 from '../assets/images/gallery/Square2.png';
+import TopHorizontal1 from '../assets/images/gallery/TopHorizontal1.png';
+import WideBottom from '../assets/images/gallery/Wide Bottom.png';
+import doodleBg from "../assets/images/doodle.png";
+---
+
+<MainLayout title="Gallery — Sree Kanika Parameshwari Trust" description="Divine expressions captured in stillness — a gallery of sacred rituals, temple moments, and spiritual ceremonies.">
+  <div class="relative min-h-screen overflow-hidden" style="background-color: #FAF5EB; padding-top: 80px;">
+    
+    <!-- Global Doodle Background -->
+    <div 
+      class="absolute inset-0 pointer-events-none z-0 opacity-10" 
+      style={`
+        background-image: url(${doodleBg.src}); 
+        background-repeat: repeat; 
+        background-size: 400px; 
+        mix-blend-mode: multiply;
+      `}
+    ></div>
+
+    <!-- Page Header -->
+    <section class="relative z-10 py-14 text-center px-6">
+      <p class="uppercase tracking-[0.3em] font-bold text-xs mb-4" style="color: #530809; font-family: 'Manrope', sans-serif;">Captured Moments</p>
+      <h1 class="text-4xl md:text-6xl font-bold mb-6" style="color: #530809; font-family: 'Noto Serif', serif;">
+        Divine Expressions in Stillness
+      </h1>
+      <p class="text-base md:text-lg max-w-2xl mx-auto leading-relaxed" style="color: #7A4444; font-family: 'Manrope', sans-serif;">
+        We capture sacred moments that transcend the ordinary — image after image that defines our living, breathing spiritual reality.
+      </p>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="relative z-10 max-w-7xl mx-auto px-6 pb-24">
+
+      <!-- Row 1: Large left + stacked right -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
+
+        <!-- Large image — Vertical Ritual -->
+        <div class="md:col-span-3 relative overflow-hidden rounded-2xl group shadow-xl" style="height: 600px;">
+          <img 
+            src={vertical1.src} 
+            alt="Main Shrine" 
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+        </div>
+
+        <!-- Right stacked column -->
+        <div class="md:col-span-2 flex flex-col gap-6">
+          <!-- Top Horizontal Image -->
+          <div class="relative overflow-hidden rounded-2xl group shadow-lg flex-1 min-height-[280px]">
+            <img 
+              src={TopHorizontal1.src} 
+              alt="Sacred Fire Ritual" 
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+          </div>
+
+          <!-- Bottom row: Square images -->
+          <div class="grid grid-cols-2 gap-6 flex-1">
+            <div class="relative overflow-hidden rounded-2xl group shadow-lg" style="min-height: 280px;">
+              <img 
+                src={Squar1.src} 
+                alt="Sacred Spire Detail" 
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+            </div>
+            <div class="relative overflow-hidden rounded-2xl group shadow-lg" style="min-height: 280px;">
+              <img 
+                src={Square2.src} 
+                alt="Devotional Moment" 
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Full-width panoramic -->
+      <div class="relative overflow-hidden rounded-2xl group shadow-2xl" style="height: 400px;">
+        <img 
+          src={WideBottom.src} 
+          alt="Annual Grand Celebration" 
+          class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700"></div>
+      </div>
+    </section>
+
+    <FooterCTA />
+  </div>
+</MainLayout>
+
+<style>
+  /* Clean image reveal on hover */
+  .group:hover img {
+    filter: brightness(1.05);
+  }
+</style>

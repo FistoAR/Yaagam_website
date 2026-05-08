@@ -1,0 +1,303 @@
+---
+/**
+ * Admin Login Page
+ */
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Login | KPT Admin</title>
+  <!-- You can keep your external CSS link, but I've added internal styles below for the enhancement -->
+  <!-- <link rel="stylesheet" href="/src/styles/admin.css" /> -->
+  
+  <style>
+    :root {
+      --primary-color: #4f46e5; /* Indigo */
+      --primary-hover: #4338ca;
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --error-color: #ef4444;
+      --border-color: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body.admin-body {
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3f4f6 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-page {
+      width: 100%;
+      max-width: 420px;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .login-card {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .brand h1 {
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .brand p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    /* Password Toggle Styles */
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-password:hover {
+      color: var(--text-main);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .error-msg {
+      background-color: #fef2f2;
+      color: var(--error-color);
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      display: none;
+      border: 1px solid #fee2e2;
+    }
+
+    .error-msg.show {
+      display: block;
+      animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+  </style>
+</head>
+<body class="admin-body">
+  <div class="login-page">
+    <div class="login-card">
+      <div class="brand">
+        <h1>🙏 Sree Kanika Parameshwari Trust</h1>
+        <p>Admin Panel Login</p>
+      </div>
+
+      <div class="error-msg" id="errorMsg"></div>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" class="form-control" placeholder="Enter your username" required autofocus />
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" class="form-control" placeholder="Enter your password" required />
+            <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+              <!-- Eye Icon (SVG) -->
+              <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <!-- Eye Off Icon (Hidden by default) -->
+              <svg id="eyeOffIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          <span id="loginText">Sign In</span>
+          <span id="loginSpinner" style="display:none;">
+            <svg style="animation: spin 1s linear infinite; width: 16px; height: 16px; margin-right: 8px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle style="opacity:0.25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path style="opacity:0.75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Signing in...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script is:inline>
+    const API_BASE = 'http://localhost:8000/api';
+
+    // If already logged in, redirect
+    if (localStorage.getItem('kpt_token')) {
+      window.location.href = '/admin/dashboard';
+    }
+
+    // --- Password Toggle Logic ---
+    const togglePasswordBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+    togglePasswordBtn.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      // Toggle Icons
+      if (type === 'text') {
+        eyeIcon.style.display = 'none';
+        eyeOffIcon.style.display = 'block';
+      } else {
+        eyeIcon.style.display = 'block';
+        eyeOffIcon.style.display = 'none';
+      }
+    });
+
+    // --- Login Form Logic ---
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('errorMsg');
+      const btn = document.getElementById('loginBtn');
+      const btnText = document.getElementById('loginText');
+      const btnSpin = document.getElementById('loginSpinner');
+
+      errEl.classList.remove('show');
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      btnSpin.style.display = 'flex'; // Changed to flex for spinner alignment
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/login.php`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Login failed');
+        }
+
+        localStorage.setItem('kpt_token', data.token);
+        localStorage.setItem('kpt_user', JSON.stringify(data.user));
+        window.location.href = '/admin/dashboard';
+      } catch (err) {
+        errEl.textContent = err.message;
+        errEl.classList.add('show');
+        btn.disabled = false;
+        btnText.style.display = 'inline';
+        btnSpin.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

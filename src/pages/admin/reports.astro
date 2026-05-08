@@ -1,0 +1,202 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Reports" activePage="reports">
+  <!-- Filters -->
+  <div class="panel">
+    <div class="panel-header">
+      <h3>Report Filters</h3>
+      <button class="btn btn-sm btn-primary" id="exportBtn">
+        <i data-lucide="download" style="width:14px;"></i> Export CSV
+      </button>
+    </div>
+    <div class="panel-body">
+      <div class="filter-bar">
+        <input type="date" id="fromDate" class="form-control" />
+        <input type="date" id="toDate" class="form-control" />
+        <select id="statusFilter" class="form-control">
+          <option value="all">All Status</option>
+          <option value="verified">Verified</option>
+          <option value="pending">Pending</option>
+        </select>
+        <button class="btn btn-sm btn-primary" id="applyFilter">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="stats-grid" id="reportStats">
+    <div class="stat-card">
+      <div class="stat-icon gold"><i data-lucide="bar-chart-3"></i></div>
+      <div class="stat-value" id="rptTotal">-</div>
+      <div class="stat-label">Total QR Codes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green"><i data-lucide="check-circle-2"></i></div>
+      <div class="stat-value" id="rptVerified">-</div>
+      <div class="stat-label">Verified</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon red"><i data-lucide="alert-circle"></i></div>
+      <div class="stat-value" id="rptPending">-</div>
+      <div class="stat-label">Pending</div>
+    </div>
+  </div>
+
+  <!-- Yaagam Breakdown -->
+  <div class="panel">
+    <div class="panel-header"><h3>Yaagam Breakdown</h3></div>
+    <div class="panel-body" style="padding:0;">
+      <table class="data-table">
+        <thead><tr><th>Yaagam Name</th><th>Total</th><th>Verified</th><th>Pending</th></tr></thead>
+        <tbody id="yaagamBody">
+          <tr><td colspan="4"><div class="loader"><div class="spinner"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Daily Breakdown -->
+  <div class="panel">
+    <div class="panel-header"><h3>Daily Breakdown</h3></div>
+    <div class="panel-body" style="padding:0;">
+      <table class="data-table">
+        <thead><tr><th>Date</th><th>Total</th><th>Verified</th><th>Pending</th></tr></thead>
+        <tbody id="dailyBody">
+          <tr><td colspan="4"><div class="loader"><div class="spinner"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- All Records -->
+  <div class="panel">
+    <div class="panel-header"><h3>All Records</h3></div>
+    <div class="panel-body" style="padding:0;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Yaagam</th>
+            <th>Event Date</th>
+            <th>Status</th>
+            <th>Verified At</th>
+            <th>Created By</th>
+          </tr>
+        </thead>
+        <tbody id="recordsBody">
+          <tr><td colspan="8"><div class="loader"><div class="spinner"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>
+
+<script is:inline>
+  // Set default date range (current month)
+  const now = new Date();
+  document.getElementById('fromDate').value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
+  document.getElementById('toDate').value = now.toISOString().split('T')[0];
+
+  async function loadReport() {
+    const from   = document.getElementById('fromDate').value;
+    const to     = document.getElementById('toDate').value;
+    const status = document.getElementById('statusFilter').value;
+
+    try {
+      const data = await apiCall(`/reports/list.php?from=${from}&to=${to}&status=${status}`);
+      if (!data.success) return;
+
+      // Summary
+      document.getElementById('rptTotal').textContent = data.summary.total || 0;
+      document.getElementById('rptVerified').textContent = data.summary.verified || 0;
+      document.getElementById('rptPending').textContent = data.summary.pending || 0;
+
+      // Yaagam breakdown
+      const yBody = document.getElementById('yaagamBody');
+      if (!data.by_yaagam || data.by_yaagam.length === 0) {
+        yBody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><p>No data</p></div></td></tr>';
+      } else {
+        yBody.innerHTML = data.by_yaagam.map(y => `
+          <tr>
+            <td style="color:var(--text-primary);font-weight:500;">${y.yaagam_name}</td>
+            <td>${y.total}</td>
+            <td style="color:var(--success);">${y.verified || 0}</td>
+            <td style="color:var(--warning);">${(y.total - (y.verified || 0))}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Daily breakdown
+      const dBody = document.getElementById('dailyBody');
+      if (!data.daily || data.daily.length === 0) {
+        dBody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><p>No data</p></div></td></tr>';
+      } else {
+        dBody.innerHTML = data.daily.map(d => `
+          <tr>
+            <td style="color:var(--text-primary);">${new Date(d.date).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}</td>
+            <td>${d.total}</td>
+            <td style="color:var(--success);">${d.verified || 0}</td>
+            <td style="color:var(--warning);">${(d.total - (d.verified || 0))}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Records
+      const rBody = document.getElementById('recordsBody');
+      if (!data.records || data.records.length === 0) {
+        rBody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><p>No records found for the selected filters.</p></div></td></tr>';
+      } else {
+        rBody.innerHTML = data.records.map((r, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td style="color:var(--text-primary);font-weight:600;">${r.customer_name}</td>
+            <td>${r.phone_number}</td>
+            <td>${r.yaagam_name}</td>
+            <td>${new Date(r.event_datetime).toLocaleDateString('en-IN')}</td>
+            <td><span class="badge ${r.is_verified == 1 ? 'verified' : 'pending'}">${r.is_verified == 1 ? 'Verified' : 'Pending'}</span></td>
+            <td>${r.verified_at ? new Date(r.verified_at).toLocaleString('en-IN') : '-'}</td>
+            <td>${r.created_by_name || '-'}</td>
+          </tr>
+        `).join('');
+        lucide.createIcons();
+      }
+
+      // Store for export
+      window._reportRecords = data.records;
+    } catch (err) {
+      showToast('Failed to load report: ' + err.message, 'error');
+    }
+  }
+  loadReport();
+
+  document.getElementById('applyFilter').addEventListener('click', loadReport);
+
+  // CSV Export
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const records = window._reportRecords;
+    if (!records || records.length === 0) { showToast('No data to export', 'error'); return; }
+
+    const headers = ['ID','Customer Name','Phone','Yaagam','Event Date','Status','Verified At','Created By'];
+    const rows = records.map(r => [
+      r.id, r.customer_name, r.phone_number, r.yaagam_name,
+      r.event_datetime, r.is_verified == 1 ? 'Verified' : 'Pending',
+      r.verified_at || '', r.created_by_name || ''
+    ]);
+
+    let csv = headers.join(',') + '\n';
+    rows.forEach(row => {
+      csv += row.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',') + '\n';
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `KPT_Report_${document.getElementById('fromDate').value}_to_${document.getElementById('toDate').value}.csv`;
+    link.click();
+    showToast('CSV exported successfully');
+  });
+</script>

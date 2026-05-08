@@ -1,0 +1,70 @@
+---
+interface Props {
+  images: ImageMetadata[];
+  height?: string;
+  interval?: number;
+}
+
+const { images, height = "280px", interval = 5000 } = Astro.props;
+---
+
+<div class="relative overflow-hidden rounded-xl group" style={`height: ${height};`}>
+  <div class="slider-track flex h-full transition-transform duration-700 ease-in-out">
+    {images.map((img) => (
+      <div class="flex-shrink-0 w-full h-full">
+        <img 
+          src={img.src} 
+          alt="Temple history" 
+          class="w-full h-full object-cover"
+        />
+      </div>
+    ))}
+  </div>
+
+  <!-- Navigation Dots (Optional) -->
+  <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+    {images.map((_, i) => (
+      <div 
+        class="slider-dot w-2 h-2 rounded-full bg-white/40 border border-white/20 cursor-pointer transition-all duration-300"
+        data-index={i}
+      ></div>
+    ))}
+  </div>
+</div>
+
+<script define:vars={{ interval, count: images.length }}>
+  const tracks = document.querySelectorAll('.slider-track');
+  
+  tracks.forEach(track => {
+    let current = 0;
+    const dots = track.parentElement.querySelectorAll('.slider-dot');
+    
+    const update = (index) => {
+      current = index;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dots.forEach((dot, i) => {
+        dot.style.backgroundColor = i === current ? 'white' : 'rgba(255,255,255,0.4)';
+        dot.style.width = i === current ? '16px' : '8px';
+      });
+    };
+
+    // Auto slide
+    setInterval(() => {
+      update((current + 1) % count);
+    }, interval);
+
+    // Click to navigate
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => update(i));
+    });
+
+    // Initial state
+    update(0);
+  });
+</script>
+
+<style>
+  .slider-dot {
+    width: 8px;
+  }
+</style>

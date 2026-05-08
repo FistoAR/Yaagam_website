@@ -1,0 +1,195 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Employee Management" activePage="employees">
+  <div class="panel">
+    <div class="panel-header">
+      <h3>Employees</h3>
+      <button class="btn btn-sm btn-primary" id="addEmployeeBtn">
+        <i data-lucide="user-plus" style="width:14px;"></i> Register Employee
+      </button>
+    </div>
+    <div class="panel-body" style="padding:0;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="empBody">
+          <tr><td colspan="8"><div class="loader"><div class="spinner"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal-overlay" id="registerModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Register Employee</h3>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="empForm">
+          <input type="hidden" id="empId" />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="empFullName">Full Name *</label>
+              <input type="text" id="empFullName" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="empUsername">Username *</label>
+              <input type="text" id="empUsername" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="empEmail">Email</label>
+              <input type="email" id="empEmail" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="empPhone">Phone</label>
+              <input type="tel" id="empPhone" class="form-control" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="empPassword">Password <span id="pwdHint">*</span></label>
+              <input type="password" id="empPassword" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="empRole">Role</label>
+              <select id="empRole" class="form-control">
+                <option value="employee">Employee</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelModal">Cancel</button>
+        <button class="btn btn-primary" id="saveEmpBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<script is:inline>
+  let isEditMode = false;
+
+  async function loadEmployees() {
+    try {
+      const data = await apiCall('/employees/list.php');
+      const tbody = document.getElementById('empBody');
+      if (!data.employees || data.employees.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><p>No employees found</p></div></td></tr>';
+        return;
+      }
+      tbody.innerHTML = data.employees.map((e, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td style="color:var(--text-primary);font-weight:600;">${e.full_name}</td>
+          <td>${e.username}</td>
+          <td>${e.email || '-'}</td>
+          <td>${e.phone || '-'}</td>
+          <td><span class="badge ${e.role === 'admin' || e.role === 'super_admin' ? 'admin-role' : 'employee-role'}">${e.role}</span></td>
+          <td><span class="badge ${e.is_active == 1 ? 'verified' : 'inactive'}">${e.is_active == 1 ? 'Active' : 'Inactive'}</span></td>
+          <td>${new Date(e.created_at).toLocaleDateString('en-IN')}</td>
+          <td>
+            ${e.role !== 'super_admin' ? `<button class="btn btn-sm btn-secondary btn-icon" title="Edit" onclick="editEmployee(${JSON.stringify(e).replace(/"/g,'&quot;')})"><i data-lucide="edit-3" style="width:14px;"></i></button>` : ''}
+          </td>
+        </tr>
+      `).join('');
+      lucide.createIcons();
+    } catch (err) {
+      showToast('Failed to load employees', 'error');
+    }
+  }
+  loadEmployees();
+
+  function openModal(edit = false) {
+    isEditMode = edit;
+    document.getElementById('registerModal').classList.add('open');
+    document.getElementById('modalTitle').textContent = edit ? 'Edit Employee' : 'Register Employee';
+    document.getElementById('empUsername').readOnly = edit;
+    document.getElementById('pwdHint').textContent = edit ? '(leave blank to keep)' : '*';
+    if (!edit) {
+      document.getElementById('empPassword').required = true;
+    } else {
+      document.getElementById('empPassword').required = false;
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('registerModal').classList.remove('open');
+    document.getElementById('empForm').reset();
+    document.getElementById('empId').value = '';
+  }
+
+  window.editEmployee = function(emp) {
+    document.getElementById('empId').value = emp.id;
+    document.getElementById('empFullName').value = emp.full_name;
+    document.getElementById('empUsername').value = emp.username;
+    document.getElementById('empEmail').value = emp.email || '';
+    document.getElementById('empPhone').value = emp.phone || '';
+    document.getElementById('empRole').value = emp.role;
+    document.getElementById('empPassword').value = '';
+    openModal(true);
+  };
+
+  document.getElementById('addEmployeeBtn').addEventListener('click', () => openModal(false));
+  document.getElementById('closeModal').addEventListener('click', closeModal);
+  document.getElementById('cancelModal').addEventListener('click', closeModal);
+
+  document.getElementById('saveEmpBtn').addEventListener('click', async () => {
+    const fullName = document.getElementById('empFullName').value.trim();
+    const username = document.getElementById('empUsername').value.trim();
+    const password = document.getElementById('empPassword').value;
+
+    if (!fullName || !username) { showToast('Name and username are required', 'error'); return; }
+    if (!isEditMode && !password) { showToast('Password is required', 'error'); return; }
+
+    try {
+      if (isEditMode) {
+        const body = {
+          id: parseInt(document.getElementById('empId').value),
+          full_name: fullName,
+          email: document.getElementById('empEmail').value.trim(),
+          phone: document.getElementById('empPhone').value.trim(),
+          role: document.getElementById('empRole').value,
+        };
+        if (password) body.password = password;
+        await apiCall('/employees/list.php', { method: 'PUT', body: JSON.stringify(body) });
+        showToast('Employee updated successfully');
+      } else {
+        await apiCall('/auth/register.php', {
+          method: 'POST',
+          body: JSON.stringify({
+            username,
+            full_name: fullName,
+            email: document.getElementById('empEmail').value.trim(),
+            phone: document.getElementById('empPhone').value.trim(),
+            password,
+            role: document.getElementById('empRole').value,
+          }),
+        });
+        showToast('Employee registered successfully');
+      }
+      closeModal();
+      loadEmployees();
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
+  });
+</script>
